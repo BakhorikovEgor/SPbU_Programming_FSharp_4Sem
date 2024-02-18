@@ -1,6 +1,6 @@
 ﻿module Homework1
 
-let factorial number =
+let Factorial number =
     if number < 0 then None else
         
     let rec helper acc =
@@ -11,7 +11,7 @@ let factorial number =
     helper 1 number
 
 
-let fibonacci number =
+let Fibonacci number =
     if number <= 0 then None else
     
     let rec helper curr next =
@@ -22,7 +22,7 @@ let fibonacci number =
     helper 0 1 number
         
             
-let reverseList list =
+let ReverseList list =
     let rec helper acc =
         function
         | [] -> acc
@@ -31,7 +31,7 @@ let reverseList list =
     helper [] list
     
     
-let seriesOfDegrees n m =
+let SeriesOfDegrees n m =
     if (n < 0 || m < 0) then None else
         
     let rec helper acc =
@@ -42,12 +42,12 @@ let seriesOfDegrees n m =
     helper [pown 2 (n + m)] m
  
  
-let findFirst list number =
+let FindFirst list number =
     let rec helper i =
         function
         | [] -> None
         | h :: _ when h = number -> Some(i)
         | _ :: t -> helper (i + 1) t
     
-    helper 1 list
+    helper 0 list
  
