@@ -1,4 +1,4 @@
-﻿module Homework2.ParseTreeEvaluation
+﻿module Homework2.ArithmeticTree
 
 type ArithmeticTree =
     | Value of int

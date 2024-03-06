@@ -1,11 +1,10 @@
 module Homework2.EvenNumbers.Tests
 
 open NUnit.Framework
-open Homework2.EvenNumbers
 open FsUnit
 open FsCheck
 
-let evenNumbersTestCases () = 
+let evenNumbersTestCases  = 
     [
         [], 0
         [1; 2; 3; 4; 5], 2
@@ -14,11 +13,10 @@ let evenNumbersTestCases () =
     ] |> List.map (fun (list, expected) -> TestCaseData(list, expected))
 
 
-
 [<TestCaseSource(nameof(evenNumbersTestCases))>]
-let CountEvenUsingMapTest list expected =
-        countEvenUsingMap list |> should equal expected
-        
+let countEvenUsingMapTest list expected  =
+        countEvenUsingMap list |> should equal expected        
+
 
 [<Test>]
 let MapAndFilterCountEquivalent () =
