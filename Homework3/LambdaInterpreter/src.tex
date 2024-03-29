@@ -1,0 +1,31 @@
+\documentclass{article}
+\usepackage{amsmath}
+\begin{document}
+
+
+\\Task - Normalization
+
+
+((\lambda a.(\lambda b.b\ b)\ (\lambda b.b\ b))\ b)\ ((\lambda c.(c\ b))\ (\lambda a.a)) \rightarrow_\beta$$
+
+((\lambda b.b\ b)\ (\lambda b.b\ b))\ ((\lambda c.(c\ b))\ (\lambda a.a)) \rightarrow_\beta$$
+
+((\lambda b.b\ b)\ (\lambda b.b\ b))\ ((\lambda a.a)\ b) \rightarrow_\beta$$
+
+((\lambda b.b\ b)\ (\lambda b.b\ b))\ b \rightarrow_\beta$$
+
+
+\\Task - S K K
+
+((\lambda x y z.x z (y z)) (\lambda x y.x) (\lambda x y.x)) \rightarrow_\beta$$
+
+((\lambda y z.(\lambda x y.x) z (y z)) (\lambda x y.x)) \rightarrow_\beta$$
+
+((\lambda z. (\lambda x y.x) z ((\lambda x y.x)z))) \rightarrow_\beta$$
+
+((\lambda z. (\lambda y.z) ((\lambda x y.x)z))) \rightarrow_\beta$$
+
+((\lambda z. (\lambda ((\lambda x y.x)z).z) ))\rightarrow_\beta$$ 
+((\lambda z. z)) = I
+    
+\end{document}
