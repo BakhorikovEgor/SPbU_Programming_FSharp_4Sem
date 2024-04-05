@@ -1,7 +1,6 @@
 module Brackets.Tests
 
 open NUnit.Framework
-open FsUnit
 open Brackets
 
 
@@ -16,9 +15,8 @@ let invalidBracketSequences () = [
 
 [<TestCaseSource(nameof(validBracketSequences))>]
 let validBracketSequencesShouldReturnTrue(sequence: string) =
-    checkBrackets sequence |> should be True
-    Assert.IsTrue(checkBrackets sequence)
+    Assert.That(checkBrackets sequence, Is.EqualTo true)
 
 [<TestCaseSource(nameof(invalidBracketSequences))>]
 let invalidBracketSequencesShouldReturnFalse(sequence: string) =
-    checkBrackets sequence |> should be False
+    Assert.That(checkBrackets sequence, Is.EqualTo false)

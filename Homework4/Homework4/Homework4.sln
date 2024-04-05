@@ -7,6 +7,10 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Brackets", "Braces\Brackets
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Brackets.Tests", "Braces.Tests\Brackets.Tests.fsproj", "{D85F0DAF-95B5-4676-BFD6-8A76D0451082}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PhoneBook", "PhoneBook\PhoneBook.fsproj", "{96D73379-98A3-4A47-BC2D-0F46AF7DEF21}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "PhoneBook.Tests", "PhoneBook.Tests\PhoneBook.Tests.fsproj", "{0BBE6E3E-7A66-4DB9-AF18-6AC2A40A7F1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{D85F0DAF-95B5-4676-BFD6-8A76D0451082}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D85F0DAF-95B5-4676-BFD6-8A76D0451082}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D85F0DAF-95B5-4676-BFD6-8A76D0451082}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96D73379-98A3-4A47-BC2D-0F46AF7DEF21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96D73379-98A3-4A47-BC2D-0F46AF7DEF21}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96D73379-98A3-4A47-BC2D-0F46AF7DEF21}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96D73379-98A3-4A47-BC2D-0F46AF7DEF21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BBE6E3E-7A66-4DB9-AF18-6AC2A40A7F1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BBE6E3E-7A66-4DB9-AF18-6AC2A40A7F1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BBE6E3E-7A66-4DB9-AF18-6AC2A40A7F1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BBE6E3E-7A66-4DB9-AF18-6AC2A40A7F1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
