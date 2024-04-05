@@ -1,4 +1,6 @@
-﻿open System.Collections.Generic
+﻿module Brackets
+
+open System.Collections.Generic
 
 let checkBrackets (s: string) =
     let stack = Stack<char>()
