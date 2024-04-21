@@ -1,4 +1,4 @@
-module Tests
+module StringCalculationTests
 
 open NUnit.Framework
 open FsUnit
