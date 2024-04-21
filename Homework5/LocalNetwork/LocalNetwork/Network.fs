@@ -18,15 +18,15 @@ type Network(computers: PC[], adjacencyMatrix: bool[,]) =
         let n = Array.length this.Computers
         let nextInfected = Array.create n false
         for i in 0 .. n - 1 do
-            if this.Computers.[i].IsInfected then
+            if this.Computers[i].IsInfected then
                 for j in 0 .. n - 1 do
-                    if this.AdjacencyMatrix.[i, j] && not this.Computers.[j].IsInfected then
-                        let infectionChance = this.Computers.[j].OS.InfectionProbability
+                    if this.AdjacencyMatrix[i, j] && not this.Computers[j].IsInfected then
+                        let infectionChance = this.Computers[j].OS.InfectionProbability
                         if infectionChance <= infectionChance then
                             nextInfected.[j] <- true
         for i in 0 .. n - 1 do
-            if nextInfected.[i] then
-                this.Computers.[i].IsInfected <- true
+            if nextInfected[i] then
+                this.Computers[i].IsInfected <- true
 
 
     member this.PrintNetworkState() =
