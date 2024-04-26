@@ -1,6 +1,8 @@
 ﻿/// Module containing various functions and types for testing purposes.
 module TestLibrary
 
+open System
+
 /// Calculates the sum of even Fibonacci numbers up to a given maximum.
 /// 
 /// `max` - The maximum value up to which the Fibonacci numbers should be calculated.
@@ -25,6 +27,7 @@ let printSquare n =
         @ List.replicate (n - 2) emptyLine
         @ [fullLine]
     
+    
     String.concat "\n" lines
 
 /// Represents a priority queue.
@@ -42,10 +45,10 @@ type PriorityQueue<'T>(comparer: 'T -> 'T -> int) =
     /// Returns the item with the highest priority.
     member this.Dequeue() =
         match elements with
-        | [] -> failwith "Queue is empty"
+        | [] ->  raise (new InvalidOperationException("Queue is empty"))
         | head :: tail ->
             elements <- tail
-            head
+            Some head
 
     /// Returns the item with the highest priority from the priority queue without removing it.
     ///
