@@ -1,4 +1,4 @@
-module LibraryTests;
+module LibraryTests
 
 open NUnit.Framework
 open FsUnit
