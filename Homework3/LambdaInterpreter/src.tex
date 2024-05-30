@@ -25,22 +25,22 @@
 
 \section*{S K K}
 \[
-((\lambda x y z. x z (y z)) \; (\lambda x y. x) \; (\lambda x y. x)) \to_\beta
+(\lambda x \; y \; z. x \; z \; (y \; z)) \; (\lambda x \; y. x) \; (\lambda x \; y. x) \to
 \]
 \[
-((\lambda y z. (\lambda x y. x) z (y z)) \; (\lambda x y. x)) \to_\beta
+(\lambda y \; z. (\lambda x \; y. x) \; z \; (y \; z)) \; (\lambda x \; y. x) \to
 \]
 \[
-((\lambda z. (\lambda x y. x) \; (y z))) \to_\beta
+\lambda z. ((\lambda x \; y. x) \; z \; ((\lambda x \; y. x) \; z)) \to
 \]
 \[
-((\lambda z. ((\lambda x y. x) \; z))) \to_\beta
+\lambda z. ((\lambda x \; y. x) \; z \; (\lambda y. z)) \to
 \]
 \[
-((\lambda z. (\lambda y. z))) \to_\beta
+\lambda z. ((\lambda y. z) \; (\lambda y. z)) \to
 \]
 \[
-((\lambda z. z)) = I
+\lambda z. z = I
 \]
 
 \end{document}
