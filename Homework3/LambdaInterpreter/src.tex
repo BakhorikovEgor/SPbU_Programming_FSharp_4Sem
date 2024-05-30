@@ -1,31 +1,46 @@
-\documentclass{article}
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
+\usepackage[russian]{babel}
+\usepackage{amsfonts}
+
 \begin{document}
 
+\section*{Normalization}
+\[
+((\lambda a. (\lambda b. b) \; b) \; ((\lambda c. (c \; b)) \; (\lambda a. a))) \to_\beta
+\]
+\[
+((\lambda b. b) \; ((\lambda c. (c \; b)) \; (\lambda a. a))) \to_\beta
+\]
+\[
+((\lambda b. b) \; ((\lambda a. a) \; b)) \to_\beta
+\]
+\[
+((\lambda b. b) \; b) \to_\beta b
+\]
 
-\\Task - Normalization
+\noindent
+Используем теорему Карри. Если дальше применять бета-редукцию форма терма не поменяется, выходит нормальной формы нет.
 
-
-((\lambda a.(\lambda b.b\ b)\ (\lambda b.b\ b))\ b)\ ((\lambda c.(c\ b))\ (\lambda a.a)) \rightarrow_\beta$$
-
-((\lambda b.b\ b)\ (\lambda b.b\ b))\ ((\lambda c.(c\ b))\ (\lambda a.a)) \rightarrow_\beta$$
-
-((\lambda b.b\ b)\ (\lambda b.b\ b))\ ((\lambda a.a)\ b) \rightarrow_\beta$$
-
-((\lambda b.b\ b)\ (\lambda b.b\ b))\ b \rightarrow_\beta$$
-
-
-\\Task - S K K
-
-((\lambda x y z.x z (y z)) (\lambda x y.x) (\lambda x y.x)) \rightarrow_\beta$$
-
-((\lambda y z.(\lambda x y.x) z (y z)) (\lambda x y.x)) \rightarrow_\beta$$
-
-((\lambda z. (\lambda x y.x) z ((\lambda x y.x)z))) \rightarrow_\beta$$
-
-((\lambda z. (\lambda y.z) ((\lambda x y.x)z))) \rightarrow_\beta$$
-
-((\lambda z. (\lambda ((\lambda x y.x)z).z) ))\rightarrow_\beta$$ 
+\section*{S K K}
+\[
+((\lambda x y z. x z (y z)) \; (\lambda x y. x) \; (\lambda x y. x)) \to_\beta
+\]
+\[
+((\lambda y z. (\lambda x y. x) z (y z)) \; (\lambda x y. x)) \to_\beta
+\]
+\[
+((\lambda z. (\lambda x y. x) \; (y z))) \to_\beta
+\]
+\[
+((\lambda z. ((\lambda x y. x) \; z))) \to_\beta
+\]
+\[
+((\lambda z. (\lambda y. z))) \to_\beta
+\]
+\[
 ((\lambda z. z)) = I
-    
+\]
+
 \end{document}
