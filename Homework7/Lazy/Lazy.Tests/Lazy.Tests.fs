@@ -18,7 +18,11 @@ let multiThreadLazy =
     |> List.map (fun a -> TestCaseData(a))
 
 
+
+
+
 [<TestCaseSource("allRealizations")>]
+[<Repeat(20)>]
 let CounterShouldBeIncrementedOnce (lazySupplier: (unit -> obj) -> obj ILazy) =
     let counter = ref 0
     let supplier = fun _ -> Interlocked.Increment(counter) 
@@ -34,14 +38,31 @@ let CounterShouldBeIncrementedOnce (lazySupplier: (unit -> obj) -> obj ILazy) =
     counter.Value |> should equal 1
 
 
-
 [<TestCaseSource("multiThreadLazy")>]
-let  CounterShouldBeIncrementedOnceMultiThread (lazySupplier: (unit -> obj) -> obj ILazy) =
+[<Repeat(20)>]
+let  CounterShouldReturnSameValueOnceMultiThread (lazySupplier: (unit -> obj) -> obj ILazy) =
     let counter = ref 0
     let supplier = fun _ -> Interlocked.Increment(counter) 
                             obj()
 
     let l = lazySupplier supplier
+
+    Seq.initInfinite (fun _ -> async { return l.Get()})
+    |> Seq.take 100
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> Seq.distinct
+    |> Seq.length |> should equal 1
+
+
+[<Test>]
+[<Repeat(20)>]
+let  MultiThreadLazyShouldUseSupplierOnce () =
+    let counter = ref 0
+    let supplier = fun _ -> Interlocked.Increment(counter) 
+                            obj()
+
+    let l = MultiThreadLazy supplier :> obj ILazy
 
     Seq.initInfinite (fun _ -> async { return l.Get()})
     |> Seq.take 100
