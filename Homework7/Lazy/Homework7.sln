@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Lazy", "Lazy\Lazy.fsproj", "{713BEB6B-F84D-4D32-BA5B-DD95230134A0}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Lazy", "Lazy\Lazy.fsproj", "{713BEB6B-F84D-4D32-BA5B-DD95230134A0}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Lazy.Tests", "Lazy.Tests\Lazy.Tests.fsproj", "{03A4DEFE-75F9-4836-AF15-2F611C099FE2}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Lazy.Tests", "Lazy.Tests\Lazy.Tests.fsproj", "{03A4DEFE-75F9-4836-AF15-2F611C099FE2}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MiniKrauler", "MiniKrauler\MiniKrauler.fsproj", "{04A8A8FB-CD02-4985-96C9-7FB74DD461A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{03A4DEFE-75F9-4836-AF15-2F611C099FE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03A4DEFE-75F9-4836-AF15-2F611C099FE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03A4DEFE-75F9-4836-AF15-2F611C099FE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{04A8A8FB-CD02-4985-96C9-7FB74DD461A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{04A8A8FB-CD02-4985-96C9-7FB74DD461A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{04A8A8FB-CD02-4985-96C9-7FB74DD461A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{04A8A8FB-CD02-4985-96C9-7FB74DD461A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

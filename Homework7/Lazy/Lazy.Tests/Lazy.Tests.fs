@@ -1,75 +1,53 @@
 ﻿module LazyTests
 
-open System
-open System.Threading
 open NUnit.Framework
-open FsUnit
 open Lasy
+open System.Threading
+open FsUnit
 
 
-[<TestFixture>]
-type LazyTests() =
+let allRealizations  = 
+    [ (fun l -> SingleThreadLazy l :> obj ILazy)
+      (fun l -> MultiThreadLazy l :> obj ILazy)
+      (fun l -> LockFreeLazy l :> obj ILazy) ]
+    |> List.map (fun a -> TestCaseData(a))
 
-    let supplier () =
-        printfn "Computing value"
-        42
+let multiThreadLazy =
+    [ (fun f -> MultiThreadLazy f :> obj ILazy)
+      (fun f -> LockFreeLazy f :> obj ILazy) ]
+    |> List.map (fun a -> TestCaseData(a))
 
-    [<Test>]
-    member _.``SingleThreadLazy should compute value only once``() =
-        let l = SingleThreadLazy(supplier) :> ILazy<_>
-        l.Get() |> should equal 42
-        l.Get() |> should equal 42
 
-    [<Test>]
-    member _.``MultiThreadLazy should compute value only once``() =
-        let l = MultiThreadLazy(supplier) :> ILazy<_>
-        let results = Array.init 10 (fun _ -> l.Get())
-        results |> Array.forall ((=) 42) |> should equal true
+[<TestCaseSource("allRealizations")>]
+let CounterShouldBeIncrementedOnce (lazySupplier: (unit -> obj) -> obj ILazy) =
+    let counter = ref 0
+    let supplier = fun _ -> Interlocked.Increment(counter) 
+                            obj()
 
-    [<Test>]
-    member _.``LockFreeLazy should compute value only once``() =
-        let l = LockFreeLazy(supplier) :> ILazy<_>
-        let results = Array.init 10 (fun _ -> l.Get())
-        results |> Array.forall ((=) 42) |> should equal true
+    let l = lazySupplier supplier
 
-    [<Test>]
-    member _.``Concurrency test for LockFreeLazy``() =
-        let l = LockFreeLazy(supplier) :> ILazy<_>
-        let results = Array.zeroCreate 10
-        let threads =
-            [| for i in 0..9 ->
-                Thread(ThreadStart(fun () -> results.[i] <- l.Get())) |]
-        threads |> Array.iter (fun t -> t.Start())
-        threads |> Array.iter (fun t -> t.Join())
-        results |> Array.forall ((=) 42) |> should equal true
+    Seq.initInfinite (fun _ -> l.Get())
+    |> Seq.take 100
+    |> Seq.distinct
+    |> Seq.length |> should equal 1
 
-    [<Test>]
-    member _.``SingleThreadLazy should work correctly with different values``() =
-        let supplier1 () = 1
-        let supplier2 () = "test"
-        let lazyInt = SingleThreadLazy(supplier1) :> ILazy<_>
-        let lazyString = SingleThreadLazy(supplier2) :> ILazy<_>
-        lazyInt.Get() |> should equal 1
-        lazyString.Get() |> should equal "test"
+    counter.Value |> should equal 1
 
-    [<Test>]
-    member _.``MultiThreadLazy should work correctly with different values``() =
-        let supplier1 () = 1
-        let supplier2 () = "test"
-        let lazyInt = MultiThreadLazy(supplier1) :> ILazy<_>
-        let lazyString = MultiThreadLazy(supplier2) :> ILazy<_>
-        let resultsInt = Array.init 10 (fun _ -> lazyInt.Get())
-        let resultsString = Array.init 10 (fun _ -> lazyString.Get())
-        resultsInt |> Array.forall ((=) 1) |> should equal true
-        resultsString |> Array.forall ((=) "test") |> should equal true
 
-    [<Test>]
-    member _.``LockFreeLazy should work correctly with different values``() =
-        let supplier1 () = 1
-        let supplier2 () = "test"
-        let lazyInt = LockFreeLazy(supplier1) :> ILazy<_>
-        let lazyString = LockFreeLazy(supplier2) :> ILazy<_>
-        let resultsInt = Array.init 10 (fun _ -> lazyInt.Get())
-        let resultsString = Array.init 10 (fun _ -> lazyString.Get())
-        resultsInt |> Array.forall ((=) 1) |> should equal true
-        resultsString |> Array.forall ((=) "test") |> should equal true
+
+[<TestCaseSource("multiThreadLazy")>]
+let  CounterShouldBeIncrementedOnceMultiThread (lazySupplier: (unit -> obj) -> obj ILazy) =
+    let counter = ref 0
+    let supplier = fun _ -> Interlocked.Increment(counter) 
+                            obj()
+
+    let l = lazySupplier supplier
+
+    Seq.initInfinite (fun _ -> async { return l.Get()})
+    |> Seq.take 100
+    |> Async.Parallel
+    |> Async.RunSynchronously
+    |> Seq.distinct
+    |> Seq.length |> should equal 1
+
+    counter.Value |> should equal 1
