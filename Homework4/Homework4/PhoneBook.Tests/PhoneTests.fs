@@ -8,36 +8,36 @@ open System.IO
 
 [<Test>]
 let StoreAddedEntryCorrectly () =
-    let phoneBook = emptyPhoneBook
+    let phoneBook = emptyPhonebook
     let name = "Alice"
     let phone = "12345"
-    let updatedPhoneBook = addEntry name phone phoneBook
-    updatedPhoneBook.Keys |> should contain name
-    updatedPhoneBook.Values |> should contain phone
+    let updatedPhoneBook = add (new Entry(name, phone)) phoneBook
+    updatedPhoneBook |> List.exists (fun x -> x.name = name) |> ignore
+    updatedPhoneBook |> List.exists (fun x -> x.phone = phone) |> ignore
 
 [<Test>]
 let FindPhoneByNameReturnCorrectPhone () =
-    let phoneBook = emptyPhoneBook
+    let phoneBook = emptyPhonebook
     let name = "Alice"
     let phone = "12345"
-    let updatedPhoneBook = addEntry name phone phoneBook
+    let updatedPhoneBook = add (new Entry(name, phone)) phoneBook
     let foundPhone = findPhoneByName name updatedPhoneBook
-    foundPhone |> should equal phone
+    foundPhone[0] |> should equal phone
 
 [<Test>]
 let FindNameByPhoneReturnCorrectName () =
-    let phoneBook = emptyPhoneBook
+    let phoneBook = emptyPhonebook
     let name = "Alice"
     let phone = "12345"
-    let updatedPhoneBook = addEntry name phone phoneBook
+    let updatedPhoneBook = add (new Entry(name, phone)) phoneBook
     let foundName = findNameByPhone phone updatedPhoneBook
-    foundName |> should equal name
+    foundName[0] |> should equal name
 
 [<Test>]
 let SaveAndLoadReturnCorrectData () =
     let tempFilePath = Path.GetTempFileName()
-    let phoneBook = emptyPhoneBook |> addEntry "Alice" "12345" |> addEntry "Bob" "67890"
+    let phoneBook = emptyPhonebook |>  add (new Entry("Alice", "1234")) |> add (new Entry("Bob", "67890"))
     savePhoneBookToFile tempFilePath phoneBook
     let loadedPhoneBook = loadPhoneBookFromFile tempFilePath
-    loadedPhoneBook |> should equal phoneBook
+    phoneBook |> should equal loadedPhoneBook 
     File.Delete(tempFilePath) 

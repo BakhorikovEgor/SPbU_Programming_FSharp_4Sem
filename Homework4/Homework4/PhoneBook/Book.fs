@@ -3,30 +3,30 @@
 open System
 open System.IO
 
-type PhoneBookEntry = { Name: string; Phone: string }
-type PhoneBook = Map<string, string>
+type Entry =
+    struct
+        val name: string
+        val phone: string
+        new(name, phone) = { name = name; phone = phone }
+    end
 
-let emptyPhoneBook = Map.empty
+type Phonebook = Entry list
 
-let addEntry name phone (phoneBook: PhoneBook) =
-    phoneBook.Add(name, phone)
+let add entry (book: Phonebook) = entry :: book
 
-let findPhoneByName name (phoneBook: PhoneBook) =
-    match phoneBook.TryFind(name) with
-    | Some(phone) -> phone
-    | None -> "Entry not found"
+let emptyPhonebook: Phonebook = []
 
-let findNameByPhone phone (phoneBook: PhoneBook) =
-    phoneBook |> Map.filter (fun _ p -> p = phone) |> Map.toList
-    |> function
-        | [] -> "Entry not found"
-        | (name, _) :: _ -> name
+let findPhoneByName name (phonebook: Phonebook) =
+    phonebook |> List.filter (fun x -> x.name = name) |> List.map (fun x -> x.phone)
 
-let printPhoneBook (phoneBook: PhoneBook) =
-    phoneBook |> Map.iter (fun name phone -> printfn "Name: %s, Phone: %s" name phone)
+let findNameByPhone phone (phonebook: Phonebook) =
+    phonebook |> List.filter (fun x -> x.phone = phone) |> List.map (fun x -> x.name)
 
-let savePhoneBookToFile filePath (phoneBook: PhoneBook) =
-    let lines = phoneBook |> Map.toList |> List.map (fun (name, phone) -> name + "," + phone)
+let printPhoneBook (phoneBook: Phonebook) =
+    phoneBook |> List.iter (fun book -> printfn "Name: %s, Phone: %s" book.name book.phone)
+
+let savePhoneBookToFile filePath (phoneBook: Phonebook) =
+    let lines = phoneBook |> List.map (fun book -> book.name + "," + book.phone)
     File.WriteAllLines(filePath, lines)
 
 let loadPhoneBookFromFile filePath =
@@ -36,24 +36,26 @@ let loadPhoneBookFromFile filePath =
         let parts = line.Split([|','|], StringSplitOptions.RemoveEmptyEntries)
         if parts.Length = 2 then
             let name, phone = parts.[0].Trim(), parts.[1].Trim()
-            Map.add name phone acc
+            let entry = new Entry (name, phone)
+            
+            entry :: acc
         else acc
-    ) emptyPhoneBook
+    ) emptyPhonebook
 
 let rec commandLoop phoneBook =
     printfn "Enter command:"
     match System.Console.ReadLine().ToLower().Split(' ') with
     | [|"exit"|] -> ()
     | [|"add"; name; phone|] -> 
-        let updatedPhoneBook = addEntry name phone phoneBook
+        let updatedPhoneBook = add (new Entry(name, phone)) phoneBook
         commandLoop updatedPhoneBook
     | [|"findphone"; name|] ->
         let phone = findPhoneByName name phoneBook
-        printfn "%s" phone
+        printfn "%s" phone[0]
         commandLoop phoneBook
     | [|"findname"; phone|] ->
         let name = findNameByPhone phone phoneBook
-        printfn "%s" name
+        printfn "%s" name[0]
         commandLoop phoneBook
     | [|"printall"|] ->
         printPhoneBook phoneBook
@@ -73,5 +75,5 @@ let rec commandLoop phoneBook =
 [<EntryPoint>]
 let main argv =
     printfn "Welcome to the Phone Book App!"
-    commandLoop emptyPhoneBook
+    commandLoop emptyPhonebook
     0
